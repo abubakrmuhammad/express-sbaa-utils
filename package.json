@@ -1,0 +1,46 @@
+{
+  "name": "sbaaa-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start:build": "node dist/app.js",
+    "start": "tsx src/app.ts",
+    "dev": "tsx watch src/app.ts",
+    "build": "tsc",
+    "db:push": "prisma db push --schema ./src/prisma/schema.prisma",
+    "prepare": "husky"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "author": "bakr",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.8",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.11",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.0.1",
+    "@t3-oss/env-core": "^0.11.1",
+    "bullmq": "^5.34.2",
+    "consola": "^3.2.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "ioredis": "^5.4.1",
+    "moment-timezone": "^0.5.46",
+    "prisma": "^6.0.1",
+    "zod": "^3.24.1"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,jsx,js,json,md}": [
+      "prettier --write"
+    ]
+  }
+}
