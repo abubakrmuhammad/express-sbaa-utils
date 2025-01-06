@@ -5,7 +5,7 @@ import {
   getCustomerFormById,
   updateCustomerForm,
   deleteCustomerForm,
-} from "@/controllers/customer-form.controller";
+} from "./controllers";
 
 const customerFormRouter = Router();
 

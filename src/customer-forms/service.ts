@@ -1,7 +1,5 @@
-import db from "@/lib/db";
+import { db, StatusCode, serviceResponse } from "@/lib";
 import { CustomerFormStatus, Prisma } from "@prisma/client";
-import { serviceResponse } from "@/lib/service-response";
-import { StatusCode } from "@/lib/status-codes";
 
 export async function createForm(formData: Prisma.CustomerFormCreateInput) {
   try {

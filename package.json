@@ -5,7 +5,7 @@
   "scripts": {
     "start": "tsx src/app.ts",
     "dev": "tsx watch src/app.ts",
-    "db:push": "prisma db push --schema ./src/prisma/schema.prisma",
+    "db:push": "prisma db push --schema ./src/lib/prisma/schema.prisma",
     "prepare": "husky"
   },
   "engines": {

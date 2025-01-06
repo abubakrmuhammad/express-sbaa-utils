@@ -1,6 +1,6 @@
-import { PrismaClient } from "@prisma/client";
-import { env } from "../env";
 import consola from "consola";
+import { PrismaClient } from "@prisma/client";
+import { env } from "@/env";
 
 /**
  * Global instance of PrismaClient for database operations
@@ -9,7 +9,7 @@ import consola from "consola";
  * - Development: info, warn, error
  * - Production: error only
  */
-const db = new PrismaClient({
+export const db = new PrismaClient({
   log:
     env.NODE_ENV === "development"
       ? ["info", "warn", "error"]
@@ -34,4 +34,3 @@ export async function testDbConnection() {
   }
 }
 
-export default db;

@@ -2,7 +2,7 @@ import {
   RequestValidationSchema,
   ValidatedRequest,
   validateRequestSchema,
-} from "@/middlewares/request-validation.middleware";
+} from "@/common/middlewares/request-validation.middleware";
 import consola from "consola";
 import { NextFunction, Request, Response } from "express";
 

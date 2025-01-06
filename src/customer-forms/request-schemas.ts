@@ -3,7 +3,7 @@ import {
   objectIdParam,
   paginationQueryFields,
   sortOrderSchema,
-} from "./common.schemas";
+} from "@/common/schemas";
 import { CustomerFormStatus } from "@prisma/client";
 
 const basicInformationSchema = z.object({

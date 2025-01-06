@@ -1,13 +1,12 @@
-import { createRouteHandler } from "@/lib/create-route-handler";
+import { createRouteHandler, StatusCode } from "@/lib";
 import {
   createCustomerFormSchema,
   deleteCustomerFormSchema,
   getCustomerFormsSchema,
   getSingleCustomerFormSchema,
   updateCustomerFormSchema,
-} from "@/schemas/requests/customer-form.schemas";
-import * as customerFormService from "@/services/customer-form.service";
-import { StatusCode } from "@/lib/status-codes";
+} from "./request-schemas";
+import * as customerFormService from "./service";
 
 export const createCustomerForm = createRouteHandler({
   schema: createCustomerFormSchema,
@@ -45,7 +44,7 @@ export const getCustomerForms = createRouteHandler({
       status,
       isEligible,
       sortBy,
-      sortOrder
+      sortOrder,
     });
 
     if (formsResp.isUnsuccessful())
