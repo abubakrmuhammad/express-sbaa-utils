@@ -47,9 +47,6 @@ npm run prisma:push
 Development mode:
 
 ```bash
-# Start the server from TypeScript
-npm start
-
 # Watch mode
 npm run dev
 ```
@@ -57,9 +54,5 @@ npm run dev
 Production mode:
 
 ```bash
-# Build the application to JS
-npm run build
-
-# Start the server from the build
-npm start:build
+npm start
 ```

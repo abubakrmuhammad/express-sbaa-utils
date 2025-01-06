@@ -1,12 +1,39 @@
+import { StatusCode } from "@/lib/status-codes";
 import { Request, Response, NextFunction } from "express";
-import { ZodError, AnyZodObject } from "zod";
+import { ZodError, AnyZodObject, ZodType } from "zod";
 import { fromZodError } from "zod-validation-error";
 
-interface ValidationSchema {
+/**
+ * Interface defining the structure of request validation schema.
+ * Each property represents a different part of the request that can be validated.
+ *
+ * @interface RequestValidationSchema
+ * @property {AnyZodObject} [body] - Schema for validating request body
+ * @property {AnyZodObject} [params] - Schema for validating route parameters
+ * @property {AnyZodObject} [query] - Schema for validating query parameters
+ */
+export interface RequestValidationSchema {
   body?: AnyZodObject;
   params?: AnyZodObject;
   query?: AnyZodObject;
 }
+
+/**
+ * Type that extends Express Request with strongly typed body, params, and query based on the validation schema.
+ *
+ * @template T - A RequestValidationSchema to provide typing information
+ *
+ * @typedef ValidatedRequest
+ * @property {P} params - Typed route parameters extracted from T["params"]
+ * @property {B} body - Typed request body extracted from T["body"]
+ * @property {Q} query - Typed query parameters extracted from T["query"]
+ */
+export type ValidatedRequest<T extends RequestValidationSchema> = Request<
+  T["params"] extends ZodType<infer P, any, any> ? P : unknown,
+  unknown,
+  T["body"] extends ZodType<infer B, any, any> ? B : unknown,
+  T["query"] extends ZodType<infer Q, any, any> ? Q : unknown
+>;
 
 /**
  * Middleware to validate request schema (body, params, query) using Zod.
@@ -34,10 +61,13 @@ interface ValidationSchema {
  *   createMeeting
  * );
  */
-export function validateRequestSchema(schema: ValidationSchema) {
+export function validateRequestSchema(schema: RequestValidationSchema) {
   return function (req: Request, res: Response, next: NextFunction) {
     if (!schema)
-      return res.error(500, "No request schema found for this route");
+      return res.error(
+        StatusCode.ServerErrorInternal,
+        "No request schema found for this route"
+      );
 
     try {
       const { body, params, query } = schema;
@@ -62,7 +92,8 @@ export function validateRequestSchema(schema: ValidationSchema) {
 
       next();
     } catch (error) {
-      if (typeof error === "string") return res.error(422, error);
+      if (typeof error === "string")
+        return res.error(StatusCode.ClientErrorUnprocessableEntity, error);
 
       return res.error(500, "Something went wrong", error);
     }

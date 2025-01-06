@@ -7,9 +7,65 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Dummy Model
-model User {
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
-  email String  @unique
-  name  String?
+enum CustomerFormStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+type BasicInformation {
+  fullLegalName   String
+  businessName    String
+  businessAddress String
+  city            String
+  state           String
+  emailAddress    String
+  phoneNumber     String
+}
+
+type BusinessDetails {
+  businessStructure     String
+  llcType               String?
+  sCorpElection         Boolean?
+  hasOperatingAgreement Boolean?
+  numberOfMembers       Int?
+  numberOfEmployees     Int
+  annualRevenue         String
+  primaryBusinessGoal   String
+}
+
+type ServicesNeeded {
+  services         String[]
+  needsEIN         Boolean
+  needsBankAccount Boolean
+  needsPayroll     Boolean
+  payrollEmployees Int?
+}
+
+type ClientScreening {
+  businessDescription String
+  businessType        String?
+  businessChallenges  String[]
+  biggestPainPoint    String
+}
+
+type AdditionalDetails {
+  hasFinancialAdvisor         String
+  wantsProfessionalConnection Boolean
+}
+
+model CustomerForm {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  basicInformation  BasicInformation
+  businessDetails   BusinessDetails
+  servicesNeeded    ServicesNeeded
+  clientScreening   ClientScreening
+  additionalDetails AdditionalDetails
+
+  isEligible Boolean            @default(true)
+  status     CustomerFormStatus @default(PENDING)
+  notes      String?
 }

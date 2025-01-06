@@ -1,4 +1,5 @@
 import { Response } from "express";
+import StatusCode from "status-code-enum";
 
 declare global {
   namespace Express {
@@ -25,7 +26,7 @@ declare global {
        * res.success(201, 'User created successfully', { user: { id: 1, name: 'John' } });
        * // Response: { "success": true, "message": "User created successfully", "data": { "user": { "id": 1, "name": "John" } } }
        */
-      success(statusCode: number, message: string, data?: any): Response;
+      success(statusCode: StatusCode, message: string, data?: any): Response;
 
       /**
        * Sends a JSON error response with status code and message
@@ -41,7 +42,7 @@ declare global {
        * res.error(400, 'Validation failed', { field: 'email', message: 'Invalid email' });
        * // Response: { "success": false, "message": "Validation failed", "data": { "field": "email", "message": "Invalid email" } }
        */
-      error(statusCode: number, message: string, data?: any): Response;
+      error(statusCode: StatusCode, message: string, data?: any): Response;
     }
   }
 }

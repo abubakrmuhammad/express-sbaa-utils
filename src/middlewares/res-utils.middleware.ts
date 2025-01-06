@@ -1,3 +1,4 @@
+import { StatusCode } from "@/lib/status-codes";
 import { Request, Response, NextFunction } from "express";
 
 /**
@@ -37,7 +38,7 @@ export function addResUtils() {
  */
 function success(
   this: Response,
-  statusCodeOrMessage: number | string,
+  statusCodeOrMessage: StatusCode | string,
   messageOrData?: string | any,
   data?: any
 ) {
@@ -49,7 +50,7 @@ function success(
     });
   }
 
-  return this.status(200).json({
+  return this.status(StatusCode.SuccessOK).json({
     success: true,
     message: statusCodeOrMessage,
     ...(messageOrData && { data: messageOrData }),
@@ -67,7 +68,7 @@ function success(
  */
 function error(
   this: Response,
-  statusCode: number,
+  statusCode: StatusCode,
   message: string,
   data?: any
 ) {
